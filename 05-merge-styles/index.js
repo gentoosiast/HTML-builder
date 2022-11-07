@@ -1,5 +1,6 @@
 const path = require('node:path');
 const fsPromises = require('node:fs/promises');
+const { EOL } = require('node:os');
 
 const outputBundle = async (stylesDir, bundlePath) => {
   try {
@@ -21,6 +22,7 @@ const outputBundle = async (stylesDir, bundlePath) => {
       const rs = fh.createReadStream({ encoding: 'utf8' });
       rs.on('end', () => {
         fh.close();
+        bundleFh.write(EOL);
       });
       await bundleFh.writeFile(rs, { encoding: 'utf8' });
     }
